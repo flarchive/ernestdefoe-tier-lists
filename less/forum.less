@@ -1,0 +1,1139 @@
+// Tier Lists. Every colour comes from Flarum's custom properties so themes and
+// dark mode carry through; row colours are the member's, with text picked to
+// read on them (ink() in api.ts). Selectors carry a class from this extension
+// so a theme's link and heading rules don't win.
+
+@tier-tile: 72px;
+@tier-tile-phone: 56px;
+@tier-tile-compact: 44px;
+
+// ─── Board ──────────────────────────────────────────────────────────────
+
+.TierBoard {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: var(--control-bg);
+  border-radius: var(--border-radius);
+  padding: 3px;
+  min-width: 0;
+}
+
+.TierBoard-row {
+  display: flex;
+  min-height: @tier-tile + 6px;
+  background: var(--body-bg);
+  border-radius: calc(var(--border-radius) - 1px);
+  overflow: hidden;
+  min-width: 0;
+}
+
+.TierBoard-label {
+  flex: 0 0 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.15;
+  text-align: center;
+  word-break: break-word;
+  min-width: 0;
+
+  span {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+}
+
+.TierBoard-label--pool {
+  background: var(--control-bg);
+  color: var(--muted-color);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.TierBoard-items {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 3px;
+  padding: 3px;
+  min-width: 0;
+}
+
+.TierTile {
+  position: relative;
+  flex: 0 0 auto;
+  width: @tier-tile;
+  height: @tier-tile;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--control-bg);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.TierTile--text {
+  width: auto;
+  min-width: @tier-tile;
+  max-width: 168px;
+  padding: 4px 8px;
+  border: 1px solid var(--control-bg-shaded, var(--control-bg));
+}
+
+.TierTile-text {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+  color: var(--text-color);
+}
+
+.TierTile-crowd {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.4;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+  max-width: calc(100% - 4px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  .icon {
+    font-size: 9px;
+  }
+}
+
+.TierTile--text .TierTile-crowd {
+  position: static;
+  margin-left: 6px;
+  flex: 0 0 auto;
+}
+
+.TierBoard--compact {
+  .TierBoard-row {
+    min-height: @tier-tile-compact + 6px;
+  }
+  .TierBoard-label {
+    flex-basis: 64px;
+    font-size: 15px;
+  }
+  .TierTile {
+    width: @tier-tile-compact;
+    height: @tier-tile-compact;
+  }
+  .TierTile--text {
+    width: auto;
+    min-width: @tier-tile-compact;
+    max-width: 120px;
+  }
+  .TierTile-text {
+    font-size: 11px;
+  }
+}
+
+@media @phone {
+  .TierBoard-label {
+    flex-basis: 56px;
+    font-size: 15px;
+  }
+  .TierBoard-label--pool {
+    font-size: 11px;
+  }
+  .TierBoard-row {
+    min-height: @tier-tile-phone + 6px;
+  }
+  .TierTile {
+    width: @tier-tile-phone;
+    height: @tier-tile-phone;
+  }
+  .TierTile--text {
+    width: auto;
+    min-width: @tier-tile-phone;
+    max-width: 128px;
+  }
+  .TierTile-text {
+    font-size: 12px;
+  }
+}
+
+.TierByline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: var(--muted-color);
+  font-weight: 600;
+
+  .TierByline-avatar {
+    --size: 24px;
+    flex: 0 0 auto;
+  }
+  .TierByline-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+a.TierByline,
+a.TierByline:hover {
+  color: var(--muted-color);
+  text-decoration: none;
+}
+
+// ─── Browse page ────────────────────────────────────────────────────────
+
+.TierListsPage-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.TierListsPage-heroText {
+  min-width: 0;
+  flex: 1 1 260px;
+}
+
+.TierListsPage .TierListsPage-title,
+.TierListPage .TierListPage-title,
+.TierEditor .TierEditor-heading {
+  color: var(--heading-color, var(--text-color));
+  margin: 0 0 4px;
+  font-size: 24px;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.TierListsPage-lead {
+  color: var(--muted-color);
+  margin: 0;
+}
+
+.TierListsPage-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.TierListsPage-tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  max-width: 100%;
+  scrollbar-width: none;
+}
+
+.TierListsPage-tab {
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  color: var(--muted-color);
+  font-weight: 600;
+  padding: 7px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+
+  .icon {
+    margin-right: 4px;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: var(--control-bg);
+    color: var(--control-color);
+  }
+
+  &.is-active {
+    background: var(--primary-color);
+    color: var(--body-bg);
+  }
+}
+
+.TierListsPage-controls {
+  display: flex;
+  gap: 8px;
+  flex: 1 1 280px;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.TierListsPage-search {
+  flex: 1 1 180px;
+  max-width: 260px;
+  min-width: 0;
+}
+
+.TierListsPage-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(~"min(250px, 100%)", 1fr));
+  gap: 16px;
+
+  > li {
+    min-width: 0;
+  }
+}
+
+.TierCard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--body-bg);
+  border: 1px solid var(--control-bg);
+  border-radius: calc(var(--border-radius) * 2);
+  overflow: hidden;
+  transition: box-shadow 0.15s, transform 0.15s;
+
+  &:hover {
+    box-shadow: 0 6px 20px var(--shadow-color);
+    transform: translateY(-2px);
+  }
+}
+
+a.TierCard-peek {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px;
+  background: var(--control-bg);
+  text-decoration: none;
+}
+
+.TierCard-row {
+  display: flex;
+  height: 40px;
+  background: var(--body-bg);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.TierCard-label {
+  flex: 0 0 auto;
+  min-width: 34px;
+  max-width: 72px;
+  padding: 0 6px;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 40px;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.TierCard-items {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  overflow: hidden;
+  min-width: 0;
+
+  img {
+    width: 36px;
+    height: 36px;
+    object-fit: cover;
+    border-radius: 2px;
+    flex: 0 0 auto;
+  }
+}
+
+.TierCard-text {
+  flex: 0 0 auto;
+  max-width: 80px;
+  padding: 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 36px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: var(--control-bg);
+  color: var(--text-color);
+  border-radius: 2px;
+}
+
+.TierCard-body {
+  padding: 12px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.TierCard-badge {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--primary-color);
+  background: var(--control-bg);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.TierCard .TierCard-title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.3;
+  word-break: break-word;
+
+  a,
+  a:hover {
+    color: var(--text-color);
+    text-decoration: none;
+  }
+}
+
+.TierCard-parent {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted-color);
+}
+
+.TierCard-meta {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+  min-width: 0;
+}
+
+.TierCard-stats {
+  display: flex;
+  gap: 10px;
+  color: var(--muted-color);
+  flex: 0 0 auto;
+}
+
+.TierListsPage-empty {
+  text-align: center;
+  padding: 40px 16px;
+  color: var(--muted-color);
+
+  > .icon {
+    font-size: 40px;
+    opacity: 0.4;
+  }
+}
+
+.TierListsPage-more {
+  text-align: center;
+  margin: 20px 0;
+}
+
+// ─── One list ───────────────────────────────────────────────────────────
+
+.TierListPage-back {
+  margin: 0 0 12px;
+
+  a {
+    color: var(--muted-color);
+  }
+}
+
+.TierListPage-head {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.TierListPage-headText {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+.TierListPage-by {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.TierListPage-when {
+  color: var(--muted-color);
+  font-size: 13px;
+}
+
+.TierListPage-origin,
+.TierListPage-note {
+  color: var(--muted-color);
+  margin: 8px 0 0;
+  font-size: 13px;
+}
+
+.TierListPage-note {
+  margin: 0 0 10px;
+}
+
+.TierListPage-description {
+  margin: 10px 0 0;
+  color: var(--text-color);
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+.TierListPage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.TierListPage-like.is-liked .icon {
+  color: #e0245e;
+}
+
+.TierListPage-tabs {
+  margin-bottom: 12px;
+}
+
+.TierListPage-foot {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.TierListPage-remixes {
+  width: 100%;
+
+  h3 {
+    font-size: 14px;
+    color: var(--muted-color);
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  li a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px 4px 4px;
+    border-radius: 999px;
+    background: var(--control-bg);
+    color: var(--control-color);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    max-width: 200px;
+
+    span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .TierListPage-remixAvatar {
+    --size: 24px;
+  }
+}
+
+.TierChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  max-width: 96px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.TierCompare-summary {
+  background: var(--control-bg);
+  border-radius: var(--border-radius);
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  color: var(--control-color);
+
+  p {
+    margin: 8px 0 0;
+  }
+}
+
+.TierCompare-meter {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--body-bg);
+  overflow: hidden;
+
+  span {
+    display: block;
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 999px;
+  }
+}
+
+.TierCompare-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.TierCompare-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: 'tile name chips' 'tile say chips';
+  align-items: center;
+  column-gap: 12px;
+  padding: 6px;
+  border-radius: var(--border-radius);
+  background: var(--body-bg);
+  border: 1px solid var(--control-bg);
+
+  .TierTile {
+    grid-area: tile;
+    width: 52px;
+    height: 52px;
+  }
+  .TierTile--text {
+    min-width: 52px;
+    max-width: 96px;
+  }
+
+  &.is-same {
+    opacity: 0.75;
+  }
+}
+
+.TierCompare-dot {
+  grid-area: tile;
+  width: 10px;
+  height: 10px;
+  margin: 0 4px;
+  border-radius: 50%;
+  background: var(--muted-more-color, var(--muted-color));
+}
+
+.TierCompare-name {
+  grid-area: name;
+  font-weight: 600;
+  color: var(--text-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.TierCompare-say {
+  grid-area: say;
+  font-size: 12px;
+  color: var(--muted-color);
+}
+
+.TierCompare-chips {
+  grid-area: chips;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.TierCompare-arrow {
+  color: var(--muted-color);
+}
+
+@media @phone {
+  .TierListPage-actions {
+    justify-content: flex-start;
+  }
+  .TierCompare-row {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: 'tile name' 'tile say' 'tile chips';
+    row-gap: 4px;
+  }
+}
+
+// ─── Embedded in a post ─────────────────────────────────────────────────
+
+.TierEmbed-mount {
+  margin: 1em 0;
+}
+
+.Post-body .TierEmbed {
+  margin: 0;
+  border: 1px solid var(--control-bg);
+  border-radius: calc(var(--border-radius) * 2);
+  overflow: hidden;
+  background: var(--body-bg);
+  max-width: 640px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.TierEmbed-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  flex-wrap: wrap;
+}
+
+.Post-body a.TierEmbed-title,
+.Post-body a.TierEmbed-title:hover {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-color);
+  text-decoration: none;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.TierEmbed .TierBoard {
+  border-radius: 0;
+}
+
+.TierEmbed-foot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 12px;
+  color: var(--muted-color);
+
+  .Button {
+    margin-left: auto;
+  }
+}
+
+.Post-body .TierEmbed-foot a.Button--primary,
+.Post-body .TierEmbed-foot a.Button--primary:hover {
+  color: var(--body-bg);
+  text-decoration: none;
+}
+
+// ─── Editor ─────────────────────────────────────────────────────────────
+
+.TierEditor {
+  max-width: 900px;
+}
+
+.TierEditor-restored,
+.TierEditor-note {
+  background: var(--control-bg);
+  color: var(--control-color);
+  border-radius: var(--border-radius);
+  padding: 8px 12px;
+  margin: 0 0 12px;
+
+  .Button--link {
+    padding: 0;
+    color: var(--primary-color);
+  }
+}
+
+.TierEditor-fields {
+  margin-bottom: 8px;
+}
+
+.TierEditor-boardHead {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 4px;
+}
+
+.TierEditor-tile {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: grab;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+
+  &.TierTile--text {
+    border: 1px solid var(--control-bg-shaded, var(--control-bg));
+    padding: 4px 8px;
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 1px;
+  }
+
+  &.is-dragging {
+    opacity: 0.3;
+  }
+
+  &.is-grabbed {
+    outline: 3px dashed var(--primary-color);
+    outline-offset: 1px;
+    transform: scale(1.06);
+    z-index: 1;
+  }
+
+  &.is-uploading {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  img {
+    pointer-events: none;
+  }
+}
+
+.TierTile--placeholder {
+  background: transparent;
+  border: 2px dashed var(--primary-color);
+  opacity: 0.8;
+}
+
+.TierGhost {
+  position: fixed;
+  left: 0;
+  top: 0;
+  margin: 0;
+  z-index: 10000;
+  pointer-events: none;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  opacity: 0.95;
+  will-change: transform;
+}
+
+.TierEditor-board.is-dragging,
+.TierEditor-board.is-dragging + .TierEditor-pool {
+  cursor: grabbing;
+}
+
+.TierEditor-row .TierEditor-drop {
+  min-height: @tier-tile + 6px;
+}
+
+.TierEditor-rowEdit {
+  flex: 0 0 168px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  min-width: 0;
+}
+
+.TierEditor .TierEditor-rowLabel {
+  height: 30px;
+  padding: 2px 6px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.35);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.TierEditor-rowTools {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  .Button--icon {
+    color: #111;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+  }
+}
+
+.TierEditor-color {
+  width: 30px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+}
+
+.TierEditor-addRow {
+  margin: 4px;
+  align-self: flex-start;
+}
+
+.TierEditor-pool {
+  margin-top: 12px;
+  padding: 10px;
+  border: 2px dashed var(--control-bg-shaded, var(--control-bg));
+  border-radius: calc(var(--border-radius) * 2);
+  background: var(--body-bg);
+}
+
+.TierEditor .TierEditor-poolTitle {
+  font-size: 14px;
+  margin: 0 0 8px;
+  color: var(--muted-color);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.TierEditor-count {
+  display: inline-block;
+  min-width: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--control-bg);
+  color: var(--control-color);
+  text-align: center;
+}
+
+.TierEditor-poolItems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-height: @tier-tile;
+  align-items: flex-start;
+}
+
+.TierEditor-poolEmpty {
+  color: var(--muted-color);
+  margin: 0;
+  align-self: center;
+}
+
+.TierEditor-add {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+
+  > .FormControl {
+    flex: 1 1 220px;
+    min-width: 0;
+  }
+
+  .TierEditor-upload.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.TierEditor-addHelp {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted-color);
+}
+
+.TierEditor-options {
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .helpText {
+    display: block;
+    font-weight: normal;
+    color: var(--muted-color);
+    font-size: 12px;
+  }
+}
+
+.TierEditor-error {
+  color: var(--validation-error-color, var(--error-color));
+  font-weight: 600;
+}
+
+.TierEditor-submit {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0 24px;
+}
+
+@media @phone {
+  .TierEditor-rowEdit {
+    flex-basis: 128px;
+  }
+  .TierEditor-row .TierEditor-drop {
+    min-height: @tier-tile-phone + 6px;
+  }
+  .TierEditor-poolItems {
+    min-height: @tier-tile-phone;
+  }
+}
+
+.TierEditor-pool.is-docked {
+  position: fixed;
+  // Above a fixed bottom bar (Mobile Tab, a theme's), measured by the editor.
+  bottom: var(--tier-dock-offset, 0px);
+  z-index: 3;
+  margin: 0;
+  max-height: 40vh;
+  max-height: 40svh;
+  overflow-y: auto;
+  border-style: solid;
+  border-radius: calc(var(--border-radius) * 2) calc(var(--border-radius) * 2) 0 0;
+  box-shadow: 0 -6px 16px var(--shadow-color);
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+}
+
+.TierEditor-poolSlot {
+  margin-top: 12px;
+
+  > .TierEditor-pool {
+    margin-top: 0;
+  }
+}
+
+// The move menu: a sheet from the bottom on phones, a centred panel elsewhere.
+.TierSheet {
+  position: fixed;
+  inset: 0;
+  z-index: var(--zindex-modal, 1050);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.TierSheet-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.TierSheet-panel {
+  position: relative;
+  width: ~"min(420px, calc(100vw - 32px))";
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--body-bg);
+  color: var(--text-color);
+  border-radius: calc(var(--border-radius) * 2);
+  padding: 14px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+}
+
+.TierSheet-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex: 0 0 auto;
+  }
+  .FormControl {
+    flex: 1;
+    min-width: 0;
+  }
+  strong {
+    flex: 1;
+    min-width: 0;
+    word-break: break-word;
+  }
+}
+
+.TierSheet-hint {
+  margin: 12px 0 6px;
+  color: var(--muted-color);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.TierSheet-tiers {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  gap: 6px;
+}
+
+.TierSheet-tier {
+  border: 0;
+  border-radius: 6px;
+  min-height: 48px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  word-break: break-word;
+
+  &.is-current {
+    box-shadow: inset 0 0 0 3px var(--text-color);
+  }
+  &:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+}
+
+.TierSheet-tier--pool {
+  grid-column: ~"1 / -1";
+  background: var(--control-bg);
+  color: var(--control-color);
+  font-size: 14px;
+}
+
+.TierSheet-remove {
+  margin-top: 12px;
+  width: 100%;
+}
+
+@media @phone {
+  .TierSheet {
+    align-items: flex-end;
+  }
+  .TierSheet-panel {
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
+  }
+}
